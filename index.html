@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f6f4ef" />
+  <title>Ruang — teman belajar yang teratur</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="shell">
+  <aside>
+    <div class="brand"><div class="brandmark">r.</div><div class="brandname">ruang<span>.</span></div></div>
+    <p class="nav-caption">Ruang belajar</p>
+    <nav class="nav" aria-label="Navigasi utama">
+      <button class="active" data-filter="all"><span class="ico">▦</span> Ikhtisar</button>
+      <button data-filter="today"><span class="ico">◷</span> Hari ini <span class="count" id="todayCount">0</span></button>
+      <button data-filter="upcoming"><span class="ico">▤</span> Mendatang <span class="count" id="upcomingCount">0</span></button>
+      <button data-filter="done"><span class="ico">✓</span> Selesai</button>
+    </nav>
+    <div class="side-bottom">
+      <div class="focus-card"><small>Catatan kecil</small><p>Pelan-pelan juga tetap sampai.</p><a href="#tasks">Lihat rencanamu ↗</a></div>
+      <div class="profile"><div class="avatar">S</div><div><strong>Siswa</strong><small>Ruang pribadi</small></div></div>
+    </div>
+  </aside>
+  <main>
+    <div class="topbar"><div class="crumb">RUANG BELAJAR <span>/</span> <b>IKHTISAR</b></div><div class="top-actions"><span class="date-chip" id="dateChip"></span><button class="icon-btn" id="todayBtn" title="Kembali ke ikhtisar">⌂</button></div></div>
+    <section class="welcome"><div><div class="eyebrow" id="greeting">SELAMAT PAGI</div><h1>Halo, <em>kamu.</em><br>Siap bikin hari ini berarti?</h1><p>Satu langkah kecil hari ini lebih baik dari rencana besar yang tertunda.</p></div><button class="primary" id="addTask"><span class="plus">＋</span> Tugas baru</button></section>
+    <section class="stats" aria-label="Ringkasan tugas">
+      <div class="stat first"><label>Progres minggu ini</label><div class="statrow"><strong id="weekProgress">0%</strong><small><span class="spark">↗</span> terus bergerak</small></div></div>
+      <div class="stat"><label>Belum selesai</label><div class="statrow"><strong id="openCount">0</strong><small>tugas aktif</small></div></div>
+      <div class="stat"><label>Tenggat terdekat</label><div class="statrow"><strong id="nextDue">—</strong><small id="nextSubject">semua aman</small></div></div>
+      <div class="stat"><label>Selesai minggu ini</label><div class="statrow"><strong id="doneCount">0</strong><small>kerja bagus ✦</small></div></div>
+    </section>
+    <section class="content-grid" id="tasks">
+      <div class="panel tasks-panel"><div class="panel-head"><div><h2 id="listTitle">Daftar tugas</h2><p id="listSubtitle">Semua hal yang sedang kamu kerjakan</p></div><button class="view-link" id="clearDone">Bersihkan selesai</button></div>
+        <div class="filters"><button class="filter active" data-priority="all">Semua</button><button class="filter" data-priority="high">Prioritas tinggi</button><button class="filter" data-priority="medium">Sedang</button><div class="search"><span>⌕</span><input id="search" placeholder="Cari tugas..." aria-label="Cari tugas"></div></div>
+        <div class="task-list" id="taskList"></div>
+      </div>
+      <div class="right-col">
+        <div class="panel week-panel"><div class="week-heading"><h2>Agenda pekan ini</h2><span id="monthLabel"></span></div><div class="week-strip" id="weekStrip"></div><div class="week-agenda" id="weekAgenda"></div></div>
+        <div class="panel progress-panel"><div class="progress-title"><h2>Ritme belajarmu</h2><span>◌</span></div><p>Konsistensi kecil membangun hasil besar.</p><div class="progress-track"><i id="progressBar"></i></div><div class="progress-foot"><span id="progressLabel">0 dari 0 tugas selesai</span><b id="progressPercent">0%</b></div></div>
+        <div class="quote"><small>Pengingat hari ini</small><p>“Kamu tidak harus melihat seluruh tangga. Cukup ambil langkah pertama.”</p><span>— Martin Luther King Jr.</span></div>
+      </div>
+    </section>
+  </main>
+</div>
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><form class="modal" id="taskForm"><div class="modal-head"><div><h2 id="modalTitle">Tambahkan tugas</h2><p>Tuangkan ke sini supaya pikiranmu lebih lega.</p></div><button type="button" class="close" id="closeModal" aria-label="Tutup">×</button></div>
+  <div class="form-grid"><div class="field full"><label for="title">Nama tugas *</label><input id="title" required maxlength="90" placeholder="Contoh: Rangkuman bab ekosistem"></div><div class="field"><label for="subject">Mata pelajaran</label><select id="subject"><option>Umum</option><option>Matematika</option><option>Bahasa</option><option>Sains</option><option>Sejarah</option><option>Proyek</option></select></div><div class="field"><label for="priority">Prioritas</label><select id="priorityInput"><option value="high">Tinggi</option><option value="medium">Sedang</option><option value="low">Santai</option></select></div><div class="field"><label for="due">Tenggat</label><input id="due" type="date" required></div><div class="field"><label for="reminder">Perkiraan waktu</label><select id="reminder"><option>30 menit</option><option>1 jam</option><option>2 jam</option><option>Lebih dari 2 jam</option></select></div><div class="field full"><label for="notes">Catatan (opsional)</label><textarea id="notes" maxlength="220" placeholder="Bagi jadi langkah kecil, tulis bahan yang perlu disiapkan..."></textarea></div></div>
+  <div class="modal-actions"><button type="button" class="secondary" id="cancelModal">Batal</button><button class="primary" type="submit">Simpan tugas</button></div></form></div><div class="toast" id="toast"></div>
+<script>
+(()=>{
+  const key='ruang-tasks-v1', today=new Date(); today.setHours(0,0,0,0);
+  const iso=d=>{const x=new Date(d);return `${x.getFullYear()}-${String(x.getMonth()+1).padStart(2,'0')}-${String(x.getDate()).padStart(2,'0')}`};
+  const addDays=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
+  const sample=[
+    {id:'a1',title:'Latihan persamaan kuadrat',subject:'Matematika',due:iso(addDays(today,0)),priority:'high',time:'1 jam',notes:'Kerjakan nomor 1–10 dari lembar latihan.',done:false},
+    {id:'a2',title:'Rangkuman bab ekosistem',subject:'Sains',due:iso(addDays(today,1)),priority:'medium',time:'2 jam',notes:'Fokus pada rantai makanan dan jaring-jaring makanan.',done:false},
+    {id:'a3',title:'Esai: kota yang ingin kutinggali',subject:'Bahasa',due:iso(addDays(today,2)),priority:'low',time:'1 jam',notes:'Minimal 500 kata.',done:false},
+    {id:'a4',title:'Buat poster pameran sejarah',subject:'Proyek',due:iso(addDays(today,4)),priority:'medium',time:'Lebih dari 2 jam',notes:'Bawa sketsa untuk diskusi kelompok.',done:false},
+    {id:'a5',title:'Baca materi sistem pernapasan',subject:'Sains',due:iso(addDays(today,-1)),priority:'low',time:'30 menit',notes:'',done:true}
+  ];
+  let tasks;try{tasks=JSON.parse(localStorage.getItem(key))||sample}catch{tasks=sample}
+  let activeView='all',activePriority='all';
+  const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
+  const save=()=>localStorage.setItem(key,JSON.stringify(tasks));
+  const pretty=d=>new Date(d+'T00:00:00').toLocaleDateString('id-ID',{day:'numeric',month:'short'});
+  const dueText=t=>{const d=new Date(t.due+'T00:00:00');const diff=Math.round((d-today)/86400000);return diff<0?`Lewat ${Math.abs(diff)} hari`:diff===0?'Hari ini':diff===1?'Besok':pretty(t.due)};
+  const notify=msg=>{const el=$('#toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2200)};
+  function render(){
+    const open=tasks.filter(t=>!t.done),done=tasks.filter(t=>t.done),todayTasks=open.filter(t=>t.due===iso(today));
+    const weekEnd=addDays(today,7),weekTasks=tasks.filter(t=>new Date(t.due+'T00:00:00')>=today&&new Date(t.due+'T00:00:00')<weekEnd);
+    $('#openCount').textContent=open.length;$('#doneCount').textContent=done.length;$('#todayCount').textContent=todayTasks.length;$('#upcomingCount').textContent=open.filter(t=>t.due>iso(today)).length;
+    const closest=open.slice().sort((a,b)=>a.due.localeCompare(b.due))[0];$('#nextDue').textContent=closest?dueText(closest):'—';$('#nextSubject').textContent=closest?closest.subject:'semua aman';
+    const pct=tasks.length?Math.round(done.length/tasks.length*100):0;$('#weekProgress').textContent=pct+'%';$('#progressBar').style.width=pct+'%';$('#progressPercent').textContent=pct+'%';$('#progressLabel').textContent=`${done.length} dari ${tasks.length} tugas selesai`;
+    const titles={all:['Daftar tugas','Semua hal yang sedang kamu kerjakan'],today:['Tugas hari ini','Fokus pada yang perlu diselesaikan hari ini'],upcoming:['Tugas mendatang','Persiapkan lebih awal, satu per satu'],done:['Tugas selesai','Semua usaha kecilmu tercatat']};$('#listTitle').textContent=titles[activeView][0];$('#listSubtitle').textContent=titles[activeView][1];
+    const query=$('#search').value.trim().toLowerCase();let shown=tasks.filter(t=>{if(activeView==='today'&&(t.done||t.due!==iso(today)))return false;if(activeView==='upcoming'&&(t.done||t.due<=iso(today)))return false;if(activeView==='done'&&!t.done)return false;if(activePriority!=='all'&&t.priority!==activePriority)return false;return (t.title+' '+t.subject+' '+t.notes).toLowerCase().includes(query)});
+    shown.sort((a,b)=>(a.done-b.done)||a.due.localeCompare(b.due)||({high:0,medium:1,low:2}[a.priority]-{high:0,medium:1,low:2}[b.priority]));
+    $('#taskList').innerHTML=shown.length?shown.map(t=>`<div class="task-row ${t.done?'done':''}"><button class="check" data-check="${t.id}" aria-label="${t.done?'Tandai belum selesai':'Tandai selesai'}">${t.done?'✓':''}</button><div><div class="task-title">${escapeHtml(t.title)}</div><div class="task-meta"><span class="subject ${t.subject}">${escapeHtml(t.subject)}</span><span>${escapeHtml(t.time||'')}</span>${t.notes?`<span title="${escapeHtml(t.notes)}">· ada catatan</span>`:''}</div></div><div class="due ${!t.done&&t.due<=iso(addDays(today,1))?'soon':''}"><i class="priority ${t.priority}"></i>${dueText(t)}</div></div>`).join(''):'<div class="empty">✳<b>Belum ada tugas di sini</b>Tambahkan tugas baru dan atur ritmemu.</div>';
+    $('#weekStrip').innerHTML=Array.from({length:7},(_,i)=>{const d=addDays(today,i),id=iso(d),days=['Min','Sen','Sel','Rab','Kam','Jum','Sab'];return `<button class="day ${i===0?'today':''} ${tasks.some(t=>t.due===id&&!t.done)?'has-task':''}" data-day="${id}"><span>${days[d.getDay()]}</span><strong>${d.getDate()}</strong></button>`}).join('');
+    const upcoming=weekTasks.filter(t=>!t.done).sort((a,b)=>a.due.localeCompare(b.due)).slice(0,3);
+    $('#weekAgenda').innerHTML=`<div class="agenda-label">${pretty(iso(today))} — prioritas terdekat</div>`+(upcoming.length?upcoming.map(t=>`<div class="agenda-item"><i class="agenda-line"></i><div><strong>${escapeHtml(t.title)}</strong><small>${dueText(t)} · ${escapeHtml(t.subject)}</small></div></div>`).join(''):'<div class="agenda-empty">Tidak ada tenggat dekat. Kamu bisa bernapas lega ✦</div>');
+    $('#monthLabel').textContent=today.toLocaleDateString('id-ID',{month:'long',year:'numeric'});
+  }
+  function escapeHtml(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+  const overlay=$('#overlay');function openModal(){overlay.classList.add('show');$('#due').value=iso(today);$('#title').focus()}function closeModal(){overlay.classList.remove('show');$('#taskForm').reset()}
+  $('#addTask').onclick=openModal;$('#closeModal').onclick=closeModal;$('#cancelModal').onclick=closeModal;overlay.addEventListener('click',e=>{if(e.target===overlay)closeModal()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+  $('#taskForm').addEventListener('submit',e=>{e.preventDefault();tasks.unshift({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),title:$('#title').value.trim(),subject:$('#subject').value,due:$('#due').value,priority:$('#priorityInput').value,time:$('#reminder').value,notes:$('#notes').value.trim(),done:false});save();closeModal();render();notify('Tugas tersimpan. Kamu sudah selangkah lebih siap ✦')});
+  $('#taskList').addEventListener('click',e=>{const b=e.target.closest('[data-check]');if(!b)return;const t=tasks.find(x=>x.id===b.dataset.check);t.done=!t.done;save();render();notify(t.done?'Satu tugas selesai. Kerja bagus!':'Tugas dikembalikan ke daftar aktif.')});
+  $$('.nav button').forEach(b=>b.addEventListener('click',()=>{$$('.nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active');activeView=b.dataset.filter;render()}));
+  $$('.filter').forEach(b=>b.addEventListener('click',()=>{$$('.filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');activePriority=b.dataset.priority;render()}));$('#search').addEventListener('input',render);
+  $('#clearDone').addEventListener('click',()=>{const n=tasks.filter(t=>t.done).length;if(!n){notify('Belum ada tugas selesai untuk dibersihkan.');return}tasks=tasks.filter(t=>!t.done);save();render();notify(`${n} tugas selesai dibersihkan.`)});
+  $('#todayBtn').addEventListener('click',()=>{$('.nav button[data-filter="all"]').click();window.scrollTo({top:0,behavior:'smooth'})});
+  $('#weekStrip').addEventListener('click',e=>{const b=e.target.closest('[data-day]');if(!b)return;const day=b.dataset.day;activeView='all';$$('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.filter==='all'));$('#search').value='';render();const list=tasks.filter(t=>t.due===day&&!t.done);notify(list.length?`${list.length} tugas pada ${pretty(day)}.`:`Tidak ada tenggat pada ${pretty(day)}.`)});
+  const hour=new Date().getHours();$('#greeting').textContent=hour<11?'SELAMAT PAGI':hour<15?'SELAMAT SIANG':hour<18?'SELAMAT SORE':'SELAMAT MALAM';$('#dateChip').textContent=today.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long'});
+  render();
+})();
+</script>
+</body>
+</html>
